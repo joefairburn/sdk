@@ -26,6 +26,8 @@
     "@content-collections/vite": "0.2.7",
     "@expressive-code/plugin-collapsible-sections": "^0.41.6",
     "@expressive-code/plugin-line-numbers": "^0.41.6",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.562.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-server-dom-webpack": "19.2.4",
