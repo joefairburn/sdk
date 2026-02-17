@@ -1,6 +1,7 @@
 import { allDocs } from "content-collections";
 import { Sidebar } from "@/app/components/Sidebar";
 
+
 // Eagerly import all MDX files as React components at build time.
 const mdxModules = import.meta.glob("../../content/docs/**/*.mdx", {
   eager: true,

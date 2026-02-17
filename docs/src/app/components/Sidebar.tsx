@@ -68,7 +68,7 @@ function SidebarItems({
               href={link("/*", { $0: item.slug })}
               className={`block rounded px-2 py-1 text-sm transition-colors ${
                 isActive
-                  ? "font-medium text-blue-400"
+                  ? "font-medium text-brand-orange"
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
