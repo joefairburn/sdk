@@ -39,6 +39,11 @@ export default defineConfig({
             plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
             defaultProps: {
               showLineNumbers: true,
+              overridesByLang: {
+                "bash,sh,shell,zsh,bat,batch,cmd,console,powershell,ps,ps1,shellscript,shellsession,ansi": {
+                  showLineNumbers: false,
+                },
+              },
             },
           },
         ],
