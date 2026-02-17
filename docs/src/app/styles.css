@@ -10,6 +10,19 @@
   --color-brand-purple: #8b2243;
 }
 
+/* Inline code – override Tailwind Typography backticks with a background pill */
+.prose :where(code):not(:where(pre *, [class~="not-prose"] *)) {
+  background-color: var(--color-zinc-800, #27272a);
+  border-radius: 0.25rem;
+  padding: 0.2em 0.4em;
+  font-weight: 500;
+}
+
+.prose :where(code):not(:where(pre *, [class~="not-prose"] *))::before,
+.prose :where(code):not(:where(pre *, [class~="not-prose"] *))::after {
+  content: none;
+}
+
 /* Steps component */
 .sl-steps ol {
   --bullet-size: 1.75rem;

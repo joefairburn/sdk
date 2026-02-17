@@ -22,6 +22,7 @@
     "types": "tsc"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
     "@content-collections/core": "0.9.1",
     "@content-collections/vite": "0.2.7",
     "@expressive-code/plugin-collapsible-sections": "^0.41.6",
@@ -32,6 +33,7 @@
     "react-dom": "19.2.4",
     "react-server-dom-webpack": "19.2.4",
     "rehype-expressive-code": "^0.41.6",
+    "rehype-mdx-import-media": "^1.2.0",
     "rwsdk": "workspace:*",
     "zod": "^4.1.11"
   },

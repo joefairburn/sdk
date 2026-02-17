@@ -5,6 +5,7 @@ import mdx from "@mdx-js/rollup";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypeExpressiveCode from "rehype-expressive-code";
+import rehypeMdxImportMedia from "rehype-mdx-import-media";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { redwood } from "rwsdk/vite";
@@ -32,6 +33,7 @@ export default defineConfig({
     mdx({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [
+        rehypeMdxImportMedia,
         [
           rehypeExpressiveCode,
           {
