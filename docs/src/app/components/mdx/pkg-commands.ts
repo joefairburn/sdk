@@ -1,4 +1,6 @@
 // Adapted from https://github.com/HiDeoo/starlight-package-managers/blob/main/packages/starlight-package-managers/pkg.ts
+export const PKG_MANAGER_COOKIE = "preferred-pkg-manager";
+
 const pkgManagerNames = ["npm", "yarn", "pnpm", "bun", "deno", "ni"] as const;
 export type PackageManager = (typeof pkgManagerNames)[number];
 

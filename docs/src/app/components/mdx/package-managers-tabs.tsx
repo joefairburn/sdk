@@ -2,8 +2,7 @@
 
 import React from "react";
 import { Tabs } from "@base-ui/react/tabs";
-
-export const PKG_MANAGER_COOKIE = "preferred-pkg-manager";
+import { PKG_MANAGER_COOKIE } from "./pkg-commands";
 
 export function PackageManagersTabs({
   labels,

@@ -1,10 +1,8 @@
 import { requestInfo } from "rwsdk/worker";
 import { Code } from "./code";
+import { PackageManagersTabs } from "./package-managers-tabs";
 import {
-  PackageManagersTabs,
   PKG_MANAGER_COOKIE,
-} from "./package-managers-tabs";
-import {
   getCommand,
   defaultPkgManagers,
   type PackageManager,
