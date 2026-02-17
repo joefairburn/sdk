@@ -6,11 +6,14 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypeExpressiveCode from "rehype-expressive-code";
 import rehypeMdxImportMedia from "rehype-mdx-import-media";
-import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
-import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { redwood } from "rwsdk/vite";
 import { defineConfig } from "vite";
 import path from "path";
+import {
+  ecThemeName,
+  ecPlugins,
+  ecDefaultProps,
+} from "./src/expressive-code.config";
 
 export default defineConfig({
   resolve: {
@@ -37,16 +40,9 @@ export default defineConfig({
         [
           rehypeExpressiveCode,
           {
-            themes: ["github-dark-default"],
-            plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
-            defaultProps: {
-              showLineNumbers: true,
-              overridesByLang: {
-                "bash,sh,shell,zsh,bat,batch,cmd,console,powershell,ps,ps1,shellscript,shellsession,ansi": {
-                  showLineNumbers: false,
-                },
-              },
-            },
+            themes: [ecThemeName],
+            plugins: ecPlugins(),
+            defaultProps: ecDefaultProps,
           },
         ],
       ],
