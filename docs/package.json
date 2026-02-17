@@ -35,8 +35,10 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-server-dom-webpack": "19.2.4",
+    "rehype-autolink-headings": "^7.1.0",
     "rehype-expressive-code": "^0.41.6",
     "rehype-mdx-import-media": "^1.2.0",
+    "rehype-slug": "^6.0.0",
     "rwsdk": "workspace:*",
     "zod": "^4.1.11"
   },

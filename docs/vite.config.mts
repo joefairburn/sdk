@@ -6,6 +6,8 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypeExpressiveCode from "rehype-expressive-code";
 import rehypeMdxImportMedia from "rehype-mdx-import-media";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { redwood } from "rwsdk/vite";
 import { defineConfig } from "vite";
 import path from "path";
@@ -37,6 +39,24 @@ export default defineConfig({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [
         rehypeMdxImportMedia,
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: "append",
+            properties: {
+              className: ["heading-anchor-link"],
+              ariaHidden: true,
+              tabIndex: -1,
+            },
+            content: {
+              type: "element",
+              tagName: "span",
+              properties: { className: ["heading-anchor"] },
+              children: [{ type: "text", value: "#" }],
+            },
+          },
+        ],
         [
           rehypeExpressiveCode,
           {

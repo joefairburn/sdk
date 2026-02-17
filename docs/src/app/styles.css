@@ -23,6 +23,23 @@
   content: none;
 }
 
+/* Heading anchor links */
+.heading-anchor-link {
+  margin-inline-start: 0.25em;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  text-decoration: none;
+  color: var(--color-zinc-500, #71717a);
+}
+
+.heading-anchor-link:hover {
+  color: var(--color-brand-orange);
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover .heading-anchor-link {
+  opacity: 1;
+}
+
 /* Steps component */
 .sl-steps ol {
   --bullet-size: 1.75rem;

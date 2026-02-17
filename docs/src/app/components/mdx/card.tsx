@@ -1,10 +1,5 @@
-/**
- * Stub for Starlight's <Card> component.
- * Renders as a simple bordered div.
- */
 export function Card({
   title,
-  icon,
   children,
 }: {
   title?: string;
@@ -12,13 +7,26 @@ export function Card({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="card">
-      {title && <h3 className="card-title">{title}</h3>}
-      {children}
-    </div>
+    <article className="not-prose flex flex-col gap-2 rounded-lg border border-zinc-700 bg-zinc-900 p-4 sm:p-6">
+      {title && (
+        <p className="text-lg font-semibold text-zinc-100">{title}</p>
+      )}
+      <div className="space-y-3 text-sm">
+        {children}
+      </div>
+    </article>
   );
 }
 
-export function CardGrid({ children }: { children?: React.ReactNode }) {
-  return <div className="card-grid">{children}</div>;
+export function CardGrid({
+  children,
+}: {
+  stagger?: boolean;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+      {children}
+    </div>
+  );
 }
