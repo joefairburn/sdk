@@ -70,7 +70,7 @@ export function Aside({
         <Icon size={16} className={clsx("shrink-0", styles.title)} />
         {resolvedTitle}
       </p>
-      <div className="text-sm text-zinc-300 [&>p]:my-1.5">
+      <div className="prose prose-invert prose-zinc max-w-none text-sm [&>p]:my-1.5">
         {children}
       </div>
     </aside>
