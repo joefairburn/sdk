@@ -79,13 +79,13 @@ export async function navigate(
 
   const url = new URL(href, window.location.href);
 
+  await globalThis.__rsc_callServer(null, null, "navigation", undefined, url.href);
+
   if (options.history === "push") {
     window.history.pushState({ path: href }, "", url);
   } else {
     window.history.replaceState({ path: href }, "", url);
   }
-
-  await globalThis.__rsc_callServer(null, null, "navigation");
 
   const scrollToTop = options.info?.scrollToTop ?? true;
   const scrollBehavior = options.info?.scrollBehavior ?? "instant";

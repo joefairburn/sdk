@@ -8,6 +8,7 @@ export type CallServerCallback = <Result>(
   args: null | unknown[],
   source?: "action" | "navigation" | "query",
   method?: "GET" | "POST",
+  navigateUrl?: string,
 ) => Promise<Result | undefined>;
 
 export type RscActionResponse<Result> = {

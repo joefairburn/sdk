@@ -39,8 +39,9 @@ export const fetchTransport: Transport = (transportContext) => {
     args: null | unknown[],
     source: "action" | "navigation" | "query" = "action",
     method: "GET" | "POST" = "POST",
+    navigateUrl?: string,
   ): Promise<Result | undefined> => {
-    const url = new URL(window.location.href);
+    const url = new URL(navigateUrl ?? window.location.href);
     url.searchParams.set("__rsc", "");
 
     const isAction = id != null;
@@ -248,8 +249,9 @@ export const initClient = async ({
     args: any,
     source?: "action" | "navigation" | "query",
     method?: "GET" | "POST",
+    navigateUrl?: string,
   ) => {
-    return transportCallServer(id, args, source, method);
+    return transportCallServer(id, args, source, method, navigateUrl);
   };
 
   const upgradeToRealtime = async ({ key }: { key?: string } = {}) => {

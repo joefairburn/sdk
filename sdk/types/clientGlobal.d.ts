@@ -9,6 +9,7 @@ declare global {
     args: any,
     source?: "action" | "navigation" | "query",
     method?: "GET" | "POST",
+    navigateUrl?: string,
   ) => Promise<any>;
   var __rw: {
     callServer: (
@@ -16,6 +17,7 @@ declare global {
       args: any,
       source?: "action" | "navigation" | "query",
       method?: "GET" | "POST",
+      navigateUrl?: string,
     ) => Promise<any>;
     upgradeToRealtime: (options?: { key?: string }) => Promise<void>;
   };
