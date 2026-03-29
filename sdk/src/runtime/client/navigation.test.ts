@@ -1,11 +1,23 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import { validateClickEvent, initClientNavigation } from "./navigation";
+import {
+  validateClickEvent,
+  initClientNavigation,
+  navigate,
+} from "./navigation";
 
 // Mocking browser globals
 vi.stubGlobal("window", {
   location: { href: "http://localhost/" },
   addEventListener: vi.fn(),
-  history: { scrollRestoration: "auto" },
+  scrollX: 0,
+  scrollY: 0,
+  scrollTo: vi.fn(),
+  history: {
+    scrollRestoration: "auto",
+    state: {},
+    pushState: vi.fn(),
+    replaceState: vi.fn(),
+  },
 });
 
 vi.stubGlobal("document", {
@@ -99,6 +111,93 @@ describe("clientNavigation", () => {
           hasAttribute: () => false,
         }),
       } as unknown as HTMLElement),
+    ).toBe(true);
+  });
+});
+
+describe("navigate", () => {
+  function createDeferred<T = void>() {
+    let resolve!: (value: T) => void;
+    const promise = new Promise<T>((r) => {
+      resolve = r;
+    });
+    return { promise, resolve };
+  }
+
+  beforeEach(() => {
+    window.location.href = "http://localhost/";
+    vi.clearAllMocks();
+    // initClientNavigation sets IS_CLIENT_NAVIGATION = true so navigate()
+    // uses client-side navigation instead of full page reload.
+    initClientNavigation();
+  });
+
+  it("should call pushState only after __rsc_callServer resolves", async () => {
+    const callOrder: string[] = [];
+    const deferred = createDeferred();
+
+    globalThis.__rsc_callServer = vi.fn(() => {
+      callOrder.push("__rsc_callServer");
+      return deferred.promise;
+    });
+    (window.history.pushState as ReturnType<typeof vi.fn>).mockImplementation(
+      () => {
+        callOrder.push("pushState");
+      },
+    );
+
+    const navigatePromise = navigate("/page");
+
+    // While the RSC fetch is pending, pushState must not have been called
+    await Promise.resolve(); // flush microtasks
+    expect(callOrder).toEqual(["__rsc_callServer"]);
+
+    deferred.resolve();
+    await navigatePromise;
+
+    expect(callOrder).toEqual(["__rsc_callServer", "pushState"]);
+  });
+
+  it("should pass target URL to __rsc_callServer, not current location", async () => {
+    globalThis.__rsc_callServer = vi.fn(() => Promise.resolve());
+
+    await navigate("/new-page");
+
+    expect(globalThis.__rsc_callServer).toHaveBeenCalledWith(
+      null,
+      null,
+      "navigation",
+      undefined,
+      "http://localhost/new-page",
+    );
+  });
+
+  it("should call replaceState for navigation only after __rsc_callServer resolves when history is 'replace'", async () => {
+    const deferred = createDeferred();
+    const replaceStateCalls: { path: string }[] = [];
+
+    globalThis.__rsc_callServer = vi.fn(() => deferred.promise);
+    (
+      window.history.replaceState as ReturnType<typeof vi.fn>
+    ).mockImplementation((state: any) => {
+      replaceStateCalls.push(state);
+    });
+
+    const navigatePromise = navigate("/page", { history: "replace" });
+
+    // While the RSC fetch is pending, only saveScrollPosition's replaceState
+    // should have fired (it saves scroll on the current entry, no `path` key).
+    // The navigation replaceState (which carries `path`) must not have fired yet.
+    await Promise.resolve();
+    expect(
+      replaceStateCalls.some((s) => s.path === "/page"),
+    ).toBe(false);
+
+    deferred.resolve();
+    await navigatePromise;
+
+    expect(
+      replaceStateCalls.some((s) => s.path === "/page"),
     ).toBe(true);
   });
 });
